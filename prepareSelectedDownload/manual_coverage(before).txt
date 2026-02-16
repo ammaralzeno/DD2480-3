@@ -1,0 +1,55 @@
+========================================
+Manual Branch Coverage Report
+Function: prepareSelectedDownload()
+File: DownloadDialog.java
+========================================
+
+Branch Coverage Details:
+------------------------
+Branch  1: [NOT COVERED] Method entry (hit 0 times)
+Branch  2: [NOT COVERED] switch: videoAudioGroup.getCheckedRadioButtonId() (hit 0 times)
+Branch  3: [NOT COVERED] case R.id.audio_button (hit 0 times)
+Branch  4: [NOT COVERED] if: format == MediaFormat.WEBMA_OPUS (true) (hit 0 times)
+Branch  5: [NOT COVERED] if: format == MediaFormat.WEBMA_OPUS (false) (hit 0 times)
+Branch  6: [NOT COVERED] else if: format != null (true) (hit 0 times)
+Branch  7: [NOT COVERED] else if: format != null (false) (hit 0 times)
+Branch  8: [NOT COVERED] case R.id.video_button (hit 0 times)
+Branch  9: [NOT COVERED] if: format != null (true) (hit 0 times)
+Branch 10: [NOT COVERED] if: format != null (false) (hit 0 times)
+Branch 11: [NOT COVERED] case R.id.subtitle_button (hit 0 times)
+Branch 12: [NOT COVERED] if: format != null (true) - subtitle mime (hit 0 times)
+Branch 13: [NOT COVERED] if: format != null (false) - subtitle mime (hit 0 times)
+Branch 14: [NOT COVERED] if: format == MediaFormat.TTML (true) (hit 0 times)
+Branch 15: [NOT COVERED] if: format == MediaFormat.TTML (false) (hit 0 times)
+Branch 16: [NOT COVERED] else if: format != null (true) - subtitle suffix (hit 0 times)
+Branch 17: [NOT COVERED] else if: format != null (false) - subtitle suffix (hit 0 times)
+Branch 18: [NOT COVERED] default case (hit 0 times)
+Branch 19: [NOT COVERED] if: !askForSavePath (true) (hit 0 times)
+Branch 20: [NOT COVERED] if: !askForSavePath (false) (hit 0 times)
+Branch 21: [NOT COVERED] if: mainStorage == null (true) (hit 0 times)
+Branch 22: [NOT COVERED] if: mainStorage == null (false) (hit 0 times)
+Branch 23: [NOT COVERED] if: mainStorage.isDirect() == useStorageAccessFramework (true) (hit 0 times)
+Branch 24: [NOT COVERED] if: mainStorage.isDirect() == useStorageAccessFramework (false) (hit 0 times)
+Branch 25: [NOT COVERED] if: mainStorage.isInvalidSafStorage() (true) (hit 0 times)
+Branch 26: [NOT COVERED] if: mainStorage.isInvalidSafStorage() (false) (hit 0 times)
+Branch 27: [NOT COVERED] if: checkedRadioButtonId == R.id.audio_button (true) - picker (hit 0 times)
+Branch 28: [NOT COVERED] if: checkedRadioButtonId == R.id.audio_button (false) - picker (hit 0 times)
+Branch 29: [NOT COVERED] if: askForSavePath (true) (hit 0 times)
+Branch 30: [NOT COVERED] if: askForSavePath (false) (hit 0 times)
+Branch 31: [NOT COVERED] if: useStorageAccessFramework(context) (true) (hit 0 times)
+Branch 32: [NOT COVERED] if: useStorageAccessFramework(context) (false) (hit 0 times)
+Branch 33: [NOT COVERED] if: checkedRadioButtonId == R.id.audio_button (true) - path (hit 0 times)
+Branch 34: [NOT COVERED] if: checkedRadioButtonId == R.id.audio_button (false) - path (hit 0 times)
+Branch 35: [NOT COVERED] if: freeSpace <= size (true) (hit 0 times)
+Branch 36: [NOT COVERED] if: freeSpace <= size (false) (hit 0 times)
+Branch 37: [NOT COVERED] if: resolveActivity != null (true) (hit 0 times)
+Branch 38: [NOT COVERED] if: resolveActivity != null (false) (hit 0 times)
+
+========================================
+Summary:
+----------------------------------------
+Total Branches:    38
+COVERED Branches:  0
+UnCOVERED Branches: 38
+Coverage:          0,0%
+========================================
