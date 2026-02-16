@@ -74,3 +74,35 @@ location= DownloadDialog::prepareSelectedDownload@762-879@./app/src/main/java/or
 - JaCoCo Result: 0% branch coverage (0/36 branches)
 - Manual Tool Result: 0% branch coverage (0/38 branches tracked)
 
+### Task 2: Coverage Improvement
+
+**Initial Coverage:** 0% (0/38 branches in manual tool)
+
+**Strategy:** Create unit tests targeting different switch case branches. All tests use `askForSavePath = false` and `mainStorage = null` to short-circuit the compound OR condition without calling static Android methods (just pure JUnit environment).
+
+**Tests Created:**
+
+1. **testAudioWebmaOpus_nullStorage_launchesAudioPicker**
+   - **Requirement:** WEBMA_OPUS audio streams must set mime to "audio/ogg" and suffix to "opus"
+   - **Assertion:** Validates correct mime type and file suffix for WEBMA_OPUS format
+   - **Branches covered:** 1, 2, 3, 4, 19, 21, 22, 27
+
+2. **testVideoMpeg4_nullStorage_launchesVideoPicker**
+   - **Requirement:** MPEG_4 video streams must set correct mime type and suffix
+   - **Assertion:** Validates MPEG_4 mime type and suffix are correctly applied
+   - **Branches covered:** 1, 2, 8, 9, 19, 21, 22, 28
+
+3. **testSubtitleTtml_nullStorage_launchesVideoPicker**
+   - **Requirement:** TTML subtitle format must be converted to SRT suffix
+   - **Assertion:** Validates TTML→SRT conversion and correct mime type
+   - **Branches covered:** 1, 2, 11, 12, 14, 19, 21, 22, 28
+
+4. **testAudioM4a_nullStorage_launchesAudioPicker**
+   - **Requirement:** M4A audio (non-WEBMA_OPUS) must use format's mime/suffix
+   - **Assertion:** Validates M4A mime type and suffix handling in else branch
+   - **Branches covered:** 1, 2, 3, 5, 6, 19, 21, 22, 27
+
+**Final Coverage:** 42.11% (16/38 branches)
+
+**Coverage Report Location:** `manual_coverage(after).txt`
+
