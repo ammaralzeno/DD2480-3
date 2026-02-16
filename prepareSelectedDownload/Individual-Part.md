@@ -106,3 +106,36 @@ location= DownloadDialog::prepareSelectedDownload@762-879@./app/src/main/java/or
 
 **Coverage Report Location:** `manual_coverage(after).txt`
 
+### Task 3: Refactoring Plan
+
+**Current Complexity:** CCN = 20
+**Target:** ≤12 (40% reduction)
+
+**Refactoring Strategy (see [Refactoring-Plan.md](Refactoriing-Plan.md) for details):**
+
+1. **Extract Switch Cases** (CCN reduction: -9)
+   - Create `prepareAudioDownload()`, `prepareVideoDownload()`, `prepareSubtitleDownload()`
+   - Removes 3 case branches + nested if/else from main method
+
+2. **Extract Storage Validation** (CCN reduction: -4)
+   - Create `isStorageValidForDownload(StoredDirectoryHelper)`
+   - Encapsulates compound OR condition into single method
+
+3. **Extract Directory Picker Logic** (CCN reduction: -2)
+   - Create `launchAppropriateDirectoryPicker(int checkedButtonId)`
+   - Handles audio vs video picker selection
+
+4. **Extract Save-As Path Logic** (CCN reduction: -2)
+   - Create `getInitialSavePath(int checkedButtonId)`
+   - Returns Uri based on media type and SAF settings
+
+**Expected Result:** CCN ≈ 11 (45% reduction)
+
+**Refactored Implementation:** See [RefactoredFunction.java](RefactoredFunction.java)
+
+**Benefits:**
+- Improved testability (smaller methods easier to test)
+- Better readability (clear method names describe intent)
+- Easier maintenance (changes localized to specific methods)
+- No functionality changes (all logic preserved)
+
