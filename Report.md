@@ -1,0 +1,416 @@
+
+# Report for assignment 3
+
+## Project
+
+- Name: NewPipe
+- URL: https://github.com/TeamNewPipe/NewPipe
+
+NewPipe is a free, open-source Android app that allows users to watch and download YouTube videos without using the official YouTube app. It does not require a Google account and focuses on privacy by avoiding tracking and background data collection.
+
+# Function 1: prepareSelectedDownload()
+
+## Onboarding experience & Complexity
+
+1. What are your results for five complex functions? 
+* Did all methods (tools vs. manual count) get the same result? 
+
+Yes, both Lizard and manual CCN count got the same: 20.
+
+* Are the results clear? 
+
+Yes, the results from Lizard were clear.
+
+2. Are the functions just complex, or also long? 
+
+This function is both complex, and very long, almost 100 LOC.
+
+3. What is the purpose of the functions? 
+
+The function prepares and validates a download request by:
+
+- Determining download type (audio, video, or subtitle) based on user selection
+- Building the filename with appropriate extension based on media format
+- Selecting the correct storage location (audio or video directory)
+- Validating storage availability
+- Launching appropriate UI (folder picker or save-as dialog) when needed
+- Persisting user preferences (last download type used)
+
+4. Are exceptions taken into account in the given measurements? 
+
+Lizard does not count exceptions, it only counts explicit control flow (if, else, switch, case, etc.). This function has no explicit try-catch blocks, so there are no exception handling branches to count.
+
+5. Is the documentation clear w.r.t. all the possible outcomes? 
+
+Yes, the function had clear documentation for its functionality.
+
+## Refactoring
+
+Plan for refactoring complex code: 
+
+see [Refactoring-Plan.md](prepareSelectedDownload/Refactoring-Plan.md) for details
+
+Estimated impact of refactoring (lower CC, but other drawbacks?).
+
+New CCN for this function is 11 (45% reduction), all functionality is preserved. This refactoring improves testability and readability. A drawback from this could be that it becomes more fragmented, however all these switch cases and if-statements should have never been in one function to begin with.
+
+Carried out refactoring (optional, P+):
+
+see [RefactoredFunction.java](prepareSelectedDownload/RefactoredFunction.java) for details
+
+## Coverage
+
+### Tools
+
+Document your experience in using a "new"/different coverage tool.
+How well was the tool documented? Was it possible/easy/difficult to
+integrate it with your build environment?
+
+The tool we used for automated coverage was JaCoCo. There were some difficulties to run it, however this was mostly due to the project itself being an Android project (needed Android SDK) and also that there were some failing tests. However skipping the failures and forcing JaCoCo to generate a report anyway worked fine.
+
+### Your own coverage tool
+
+Show a patch (or link to a branch) that shows the instrumented code to
+gather coverage measurements.
+
+see [ManualCoverageInstrumentation.java](prepareSelectedDownload/ManualCoverageInstrumentation.java) for details
+
+What kinds of constructs does your tool support, and how accurate is
+its output? 
+
+The tool supports normal control flow branches (if/else, switch/case, while loops) and boolean conditions (OR/AND operators), it tracks each as separate decision points. However, it does not automatically handle ternary operators (? :) or exception paths (try/catch). The output accuracy is identical to manual counting.
+
+### Evaluation
+
+1. How detailed is your coverage measurement? 
+
+The coverage measurement tracks 38 distinct branches in prepareSelectedDownload(), including method entry, switch statement outcomes (4 cases), nested if/else branches (10 in switch cases), compound OR conditions (3 operators counted separately), and storage/path validation logic (15 branches). Each branch is labeled with its purpose ("if: format == MediaFormat.WEBMA_OPUS (true)") and reports hit count and coverage percentage.
+
+2. What are the limitations of your own tool?
+
+The tool requires manual source code modification (adding recordBranch() calls before each branch), does not automatically track ternary operators or exception handling paths. Also any code changes require manual re-instrumentation, so it is impractical for continuous development.
+
+3. Are the results of your tool consistent with existing coverage tools?
+
+Both the manual tool and JaCoCo reported 0% initial coverage and showed significant improvement after adding tests. However, there's a 2 branch difference (manual: 16/38, JaCoCo: 16/36), most likely because JaCoCo counts branches differently for compound conditions or combines some if/else pairs. The covered branch patterns match exactly (same switch cases and if-statements hit).
+
+## Coverage improvement
+
+Show the comments that describe the requirements for the coverage.
+Report of old coverage: [manual_coverage(before)](prepareSelectedDownload/manual_coverage(before).txt)
+Report of new coverage: [manual_coverage(after)](prepareSelectedDownload/manual_coverage(after).txt)
+
+Test cases added:
+
+see [DownloadDialogTest.java](prepareSelectedDownload/DownloadDialogTest.java) for details
+
+# Function 2: getFilteredAudioStreams()
+
+## Onboarding experience & Complexity
+
+1. What are your results for the complex functions?
+   * Did all methods (tools vs. manual count) get the same result?
+   * Are the results clear?
+
+    Yes for getFilteredAudioStreams both Lizard and the manaul count get the same result, both got 9.
+
+2. Are the functions just complex, or also long?
+    
+    The function is mostly just complex its 35 LOC.
+
+3. What is the purpose of the functions?
+
+    The purpose of the function is to filter Aduio streams from a list of availble streams, keeping only the stream with best quality for each audio track and filter unsuported formats and delivery methods.
+    
+4. Are exceptions taken into account in the given measurements?
+
+    No, for getFilteredAudioStreams there are no exeptions.
+
+5. Is the documentation clear w.r.t. all the possible outcomes?
+
+    //TODO
+
+## Refactoring
+
+Plan for refactoring complex code:
+
+Estimated impact of refactoring (lower CC, but other drawbacks?).
+
+Carried out refactoring (optional, P+):
+
+git diff ...
+
+## Coverage
+
+### Tools
+
+Document your experience in using a "new"/different coverage tool.
+How well was the tool documented? Was it possible/easy/difficult to
+integrate it with your build environment?
+
+The tool I used for code coverage was JaCoCo. I initially had some trouble running it, but after installing the required Android and Java versions for the NewPipe project, it worked.
+
+### Your own coverage tool
+
+Show a patch (or link to a branch) that shows the instrumented code to
+gather coverage measurements.
+
+The patch is probably too long to be copied here, so please add
+the git command that is used to obtain the patch instead:
+
+git diff ...
+
+What kinds of constructs does your tool support, and how accurate is
+its output?
+
+### Evaluation
+
+1. How detailed is your coverage measurement?
+
+2. What are the limitations of your own tool?
+
+3. Are the results of your tool consistent with existing coverage tools?
+
+## Coverage improvement
+
+Show the comments that describe the requirements for the coverage.
+
+Report of old coverage: [link]
+
+Report of new coverage: [link]
+
+Test cases added:
+
+git diff ...
+
+Number of test cases added: two per team member (P) or at least four (P+).
+
+
+# Function 3: xxx()
+## Onboarding experience & Complexity
+
+1. What are your results for five complex functions?
+   * Did all methods (tools vs. manual count) get the same result?
+   * Are the results clear?
+2. Are the functions just complex, or also long?
+3. What is the purpose of the functions?
+4. Are exceptions taken into account in the given measurements?
+5. Is the documentation clear w.r.t. all the possible outcomes?
+
+## Refactoring
+
+Plan for refactoring complex code:
+
+Estimated impact of refactoring (lower CC, but other drawbacks?).
+
+Carried out refactoring (optional, P+):
+
+git diff ...
+
+## Coverage
+
+### Tools
+
+Document your experience in using a "new"/different coverage tool.
+
+How well was the tool documented? Was it possible/easy/difficult to
+integrate it with your build environment?
+
+### Your own coverage tool
+
+Show a patch (or link to a branch) that shows the instrumented code to
+gather coverage measurements.
+
+The patch is probably too long to be copied here, so please add
+the git command that is used to obtain the patch instead:
+
+git diff ...
+
+What kinds of constructs does your tool support, and how accurate is
+its output?
+
+### Evaluation
+
+1. How detailed is your coverage measurement?
+
+2. What are the limitations of your own tool?
+
+3. Are the results of your tool consistent with existing coverage tools?
+
+## Coverage improvement
+
+Show the comments that describe the requirements for the coverage.
+
+Report of old coverage: [link]
+
+Report of new coverage: [link]
+
+Test cases added:
+
+git diff ...
+
+Number of test cases added: two per team member (P) or at least four (P+).
+
+# Function 4: xxx()
+
+## Onboarding experience & Complexity
+
+1. What are your results for five complex functions?
+   * Did all methods (tools vs. manual count) get the same result?
+   * Are the results clear?
+2. Are the functions just complex, or also long?
+3. What is the purpose of the functions?
+4. Are exceptions taken into account in the given measurements?
+5. Is the documentation clear w.r.t. all the possible outcomes?
+
+## Refactoring
+
+Plan for refactoring complex code:
+
+Estimated impact of refactoring (lower CC, but other drawbacks?).
+
+Carried out refactoring (optional, P+):
+
+git diff ...
+
+## Coverage
+
+### Tools
+
+Document your experience in using a "new"/different coverage tool.
+
+How well was the tool documented? Was it possible/easy/difficult to
+integrate it with your build environment?
+
+### Your own coverage tool
+
+Show a patch (or link to a branch) that shows the instrumented code to
+gather coverage measurements.
+
+The patch is probably too long to be copied here, so please add
+the git command that is used to obtain the patch instead:
+
+git diff ...
+
+What kinds of constructs does your tool support, and how accurate is
+its output?
+
+### Evaluation
+
+1. How detailed is your coverage measurement?
+
+2. What are the limitations of your own tool?
+
+3. Are the results of your tool consistent with existing coverage tools?
+
+## Coverage improvement
+
+Show the comments that describe the requirements for the coverage.
+
+Report of old coverage: [link]
+
+Report of new coverage: [link]
+
+Test cases added:
+
+git diff ...
+
+Number of test cases added: two per team member (P) or at least four (P+).
+
+# Function 5: xxx()
+
+## Onboarding experience & Complexity
+
+1. What are your results for five complex functions?
+   * Did all methods (tools vs. manual count) get the same result?
+   * Are the results clear?
+2. Are the functions just complex, or also long?
+3. What is the purpose of the functions?
+4. Are exceptions taken into account in the given measurements?
+5. Is the documentation clear w.r.t. all the possible outcomes?
+
+## Refactoring
+
+Plan for refactoring complex code:
+
+Estimated impact of refactoring (lower CC, but other drawbacks?).
+
+Carried out refactoring (optional, P+):
+
+git diff ...
+
+## Coverage
+
+### Tools
+
+Document your experience in using a "new"/different coverage tool.
+
+How well was the tool documented? Was it possible/easy/difficult to
+integrate it with your build environment?
+
+### Your own coverage tool
+
+Show a patch (or link to a branch) that shows the instrumented code to
+gather coverage measurements.
+
+The patch is probably too long to be copied here, so please add
+the git command that is used to obtain the patch instead:
+
+git diff ...
+
+What kinds of constructs does your tool support, and how accurate is
+its output?
+
+### Evaluation
+
+1. How detailed is your coverage measurement?
+
+2. What are the limitations of your own tool?
+
+3. Are the results of your tool consistent with existing coverage tools?
+
+## Coverage improvement
+
+Show the comments that describe the requirements for the coverage.
+
+Report of old coverage: [link]
+
+Report of new coverage: [link]
+
+Test cases added:
+
+git diff ...
+
+Number of test cases added: two per team member (P) or at least four (P+).
+
+
+# Self-assessment: Way of working
+
+Current state according to the Essence standard: "In Place"
+
+Was the self-assessment unanimous? Any doubts about certain items?
+
+    Yes, the self-assessment was unanimous. There were no major doubts, although some items required brief discussion to ensure a shared understanding.
+
+How have you improved so far?
+
+    During the course, we have improved as a group, especially in working together more effectively and collaboratively.
+
+Where is potential for improvement?
+
+    We need to reach a stage where the team naturally applies the practices without having to consciously think about them.
+
+# Overall experience
+
+What are your main take-aways from this project?
+
+It is harder than expected to jump into an unknown complex project, which is not very structured and has only 2% test coverage. The onboarding experience was not very smooth. It is important to do a little research before deciding to work on a specific open source project, since it can be time draining if one chooses a badly structured project. 
+
+What did you learn?
+
+During this project we learnd a lot about the complexity of working with a larger project, due to NewPipes large amount of contributors, it was a lot to understand and it was quite messy.
+We also learnd more about using the branch covering tool to be able easier see how well the functions are tested.
+
+Is there something special you want to mention here?
+
+The assignment was unnecessarily complex. In order to get P+ we needed to work in two different repos, and copy files in between. Assignment 1 & 2 were much better structured and we felt that we learned more from those.
