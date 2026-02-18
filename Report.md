@@ -112,7 +112,7 @@ see [DownloadDialogTest.java](prepareSelectedDownload/DownloadDialogTest.java) f
    * Did all methods (tools vs. manual count) get the same result?
    * Are the results clear?
 
-    Yes for getFilteredAudioStreams both Lizard and the manaul count get the same result, both got 9.
+Yes. For getFilteredAudioStreams both Lizard and the manual count got the same result, CCN 9.
 
 2. Are the functions just complex, or also long?
     
@@ -120,27 +120,29 @@ see [DownloadDialogTest.java](prepareSelectedDownload/DownloadDialogTest.java) f
 
 3. What is the purpose of the functions?
 
-    The purpose of the function is to filter Aduio streams from a list of availble streams, keeping only the stream with best quality for each audio track and filter unsuported formats and delivery methods.
+The purpose is to filter audio streams from a list of available streams, keeping the best-quality stream per audio track and filtering out unsupported formats and delivery methods.
     
 4. Are exceptions taken into account in the given measurements?
 
-    No, for getFilteredAudioStreams there are no exeptions.
+No. For getFilteredAudioStreams there are no exceptions.
 
 5. Is the documentation clear w.r.t. all the possible outcomes?
 
-    //TODO
+Partly. The doc describes overall behaviour (filter, best per track, sort) but not each branch (e.g. null → empty, skip TORRENT/HLS+OPUS, remove unknown when multiple tracks). 
 
 ## Refactoring
 
-Plan for refactoring complex code:
+Plan for refactoring complex code: 
+
+see [refactoringPlan.md](getFilteredAudioStreams/04-refactoring-plan/refactoringPlan.md) for details
 
 Estimated impact of refactoring (lower CC, but other drawbacks?).
 
+Main method CCN drops from 9 to 5 (~44 %). Behaviour is unchanged. The only drawback is a few extra small methods to maintain; each is short and has a single responsibility.
+
 Carried out refactoring (optional, P+):
 
-git diff ...
-
-## Coverage
+see [getFilteredAudioStreamsRefactor.java](getFilteredAudioStreams/05-refactor-function/getFilteredAudioStreamsRefactor.java) for details
 
 ### Tools
 
@@ -155,35 +157,36 @@ The tool I used for code coverage was JaCoCo. I initially had some trouble runni
 Show a patch (or link to a branch) that shows the instrumented code to
 gather coverage measurements.
 
-The patch is probably too long to be copied here, so please add
-the git command that is used to obtain the patch instead:
-
-git diff ...
+see [getFilteredAudioStreamsInstrumented.java](getFilteredAudioStreams/02-coverage-tool/getFilteredAudioStreamsInstrumented.java) and [manualCoverage.java](getFilteredAudioStreams/02-coverage-tool/manualCoverage.java) for details
 
 What kinds of constructs does your tool support, and how accurate is
-its output?
+its output? 
+
+It supports normal branches (if/else, for): each branch has a unique ID and we call hit(id) when it is taken. Output is accurate for instrumented branches. It does not track ternary operators or exceptions.
 
 ### Evaluation
 
-1. How detailed is your coverage measurement?
+1. How detailed is your coverage measurement? 
+
+Branch-level: we report which of the 8 branch IDs were hit (e.g. 6/8). No line or instruction counts.
 
 2. What are the limitations of your own tool?
 
+Only branches we manually instrument are counted. No ternary or exception paths. If the code changes, instrumentation must be updated by hand.
+
 3. Are the results of your tool consistent with existing coverage tools?
+
+ManualCoverage reported 75% (6/8 branches) and JaCoCo 87%. They point in the same direction; JaCoCo counts more branch points (e.g. inside helpers) and uses a different denominator, so the percentages do not match exactly.
 
 ## Coverage improvement
 
 Show the comments that describe the requirements for the coverage.
-
-Report of old coverage: [link]
-
-Report of new coverage: [link]
+Report of old coverage: [coverageBefore.md](getFilteredAudioStreams/02-coverage-tool/coverageBefore.md)
+Report of new coverage: [coverageAfter.md](getFilteredAudioStreams/03-improve-coverage/coverageAfter.md)
 
 Test cases added:
 
-git diff ...
-
-Number of test cases added: two per team member (P) or at least four (P+).
+see [getFilteredAudioStreamsTest.java](getFilteredAudioStreams/03-improve-coverage/getFilteredAudioStreamsTest.java) for details
 
 
 # Function 3: xxx()
