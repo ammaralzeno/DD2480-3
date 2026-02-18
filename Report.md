@@ -189,70 +189,115 @@ Test cases added:
 see [getFilteredAudioStreamsTest.java](getFilteredAudioStreams/03-improve-coverage/getFilteredAudioStreamsTest.java) for details
 
 
-# Function 3: xxx()
+# Function 3: getNextChunk(boolean infoOnly)
+
 ## Onboarding experience & Complexity
 
-1. What are your results for five complex functions?
-   * Did all methods (tools vs. manual count) get the same result?
-   * Are the results clear?
-2. Are the functions just complex, or also long?
-3. What is the purpose of the functions?
-4. Are exceptions taken into account in the given measurements?
-5. Is the documentation clear w.r.t. all the possible outcomes?
+**Chosen function**  
+`getNextChunk(boolean infoOnly)` in `Mp4DashReader.java`  
+Path: `./app/src/main/java/org/schabi/newpipe/streams/Mp4DashReader.java`
+
+### Lizard results (before refactor)
+- **NLOC = 64**
+- **CCN = 18**
+- token = 419, PARAM = 1, length = 76
+- location: `@176-251`
+
+### Manual CC count (before refactor)
+Rule: start at 1; +1 per `if/while`; +1 per `case` (excluding `default`); +1 per `&&/||` in conditions.  
+**Result:** **CC = 18** (matches Lizard)
+
+1. **Results / agreement**  
+   Manual and tool match (18). Some tools may count `switch`/short-circuit logic differently.
+
+2. **High CC vs LOC**  
+   Not huge LOC, but it’s branch-heavy: nested checks, many early exits, and flag-based cases.
+
+3. **Purpose (why it’s branchy)**  
+   Parses MP4-DASH fragment boxes (`moof` + `mdat`), enforces ordering, and derives missing fields based on flags (`dataOffset`, `chunkSize`, `chunkDuration`). Format variability drives branching.
+
+4. **Exceptions and CC**  
+   CC tools typically don’t treat `throw` as decision points (no `catch` blocks here). If you treat each `throw` as an extra possible exit path, the effective number of paths is higher than CC.
+
+5. **Documentation clarity**  
+   Outcomes are: return a chunk, return `null` (end/skip), or throw `IOException` for malformed sequences. This isn’t fully documented in Javadoc.
+
+---
 
 ## Refactoring
 
-Plan for refactoring complex code:
+### Plan
+Split responsibilities into helpers:
+- `advanceToNextBox()` — handles `chunkZero`, `ensure(box)`, and reading the next box
+- `processCurrentBox(track, infoOnly)` — dispatch based on `box.type`
+- `handleMoofBox(track)` / `handleMdatBox(infoOnly)` — box-specific logic
+- `normalizeTrafAfterParse(...)` + helpers for offset/size/duration fixups
 
-Estimated impact of refactoring (lower CC, but other drawbacks?).
+Goal: keep behavior identical, reduce nesting in the main loop, and improve testability.
 
-Carried out refactoring (optional, P+):
+### Carried out refactoring (P+)
+Files:
+- Refactored version: `code/getNextChunkRefactored.java`
+- Original/instrumented snapshot: `code/getNextChunkLocal.java`
 
-git diff ...
+### Lizard results (after refactor)
+From Lizard output:
+- **NLOC = 13**
+- **CCN = 4**
+- token = 65, PARAM = 1, length = 16
+
+**Complexity reduction:** 18 → 4 (**77.78%**, above the 35% target)
+
+---
 
 ## Coverage
 
-### Tools
+### Your own coverage tool (DIY)
+Coverage helper:
+- `code/Mp4DashReaderBranchCoverage.java`
 
-Document your experience in using a "new"/different coverage tool.
+Instrumentation approach:
+- Insert `recordBranch(ID)` as the first statement of each branch outcome in `getNextChunk()` (`if/else` arms, box-type dispatch, `return`, `throw`).
 
-How well was the tool documented? Was it possible/easy/difficult to
-integrate it with your build environment?
+#### Evaluation
+1. **How detailed is the measurement?**  
+   Branch-level for this single function: **33 branch IDs**, each reported as covered/not covered with hit counts.
 
-### Your own coverage tool
+2. **Limitations**  
+   Manual and brittle: IDs + markers must be updated if code changes. No automatic mapping from ID → source line unless maintained separately. Doesn’t include compiler/bytecode-generated branches.
 
-Show a patch (or link to a branch) that shows the instrumented code to
-gather coverage measurements.
+3. **Consistency vs automated tools**  
+   Consistent for explicit `if/switch/return/throw` outcomes. Percentages may differ from JaCoCo due to different branch models/denominators.
 
-The patch is probably too long to be copied here, so please add
-the git command that is used to obtain the patch instead:
-
-git diff ...
-
-What kinds of constructs does your tool support, and how accurate is
-its output?
-
-### Evaluation
-
-1. How detailed is your coverage measurement?
-
-2. What are the limitations of your own tool?
-
-3. Are the results of your tool consistent with existing coverage tools?
+---
 
 ## Coverage improvement
 
-Show the comments that describe the requirements for the coverage.
+### Tests added
+Test file:
+- `code/Mp4DashReaderGetNextChunkTest.java`
 
-Report of old coverage: [link]
+What the tests cover (requirements):
+- Valid `moof` then `mdat` returns a `Mp4DashChunk`
+- `infoOnly=false` creates `chunk.data`, `infoOnly=true` keeps `chunk.data == null`
+- Error paths:
+   - `mdat` without `moof` → `IOException`
+   - second `moof` before closing previous → `IOException`
+   - negative `trun.dataOffset` after adjustment → `IOException`
+- Track mismatch:
+   - `moof.traf == null` causes `mdat` to be skipped and the function returns `null`
 
-Report of new coverage: [link]
+### Coverage before/after
+- **Before tests:** 0% (function not executed)
+- **After tests:** **81.82% (27/33)**  
+  Log: `code/coverage(after).txt`
 
-Test cases added:
+Uncovered IDs: **13, 17, 18, 21, 22, 32**  
+(e.g., dataOffset non-negative path, size fallback branch, duration-fix false branch, default/other box type)
 
-git diff ...
+---
 
-Number of test cases added: two per team member (P) or at least four (P+).
+
 
 # Function 4: xxx()
 
