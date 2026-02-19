@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.schabi.newpipe.streams.io.StoredDirectoryHelper;
 import org.schabi.newpipe.streams.io.StoredFileHelper;
+import org.schabi.newpipe.coverage.ManualCoverage;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.never;
@@ -46,6 +47,17 @@ public class DownloadDialogTest {
         when(mockStorage.createFile(anyString(), anyString())).thenReturn(mockFile);
         when(mockStorage.getUri()).thenReturn(mockUri);
         when(mockStorage.getTag()).thenReturn("tag");
+    }
+
+    @AfterClass
+    public static void printFinalReport() {
+        ManualCoverage.printReport();
+        double cov = ManualCoverage.getCoveragePercentage();
+
+        // Write coverage report to file
+        String projectDir = System.getProperty("user.dir");
+        String reportPath = projectDir + "/manual_coverage.txt";
+        ManualCoverage.writeReport(reportPath);
     }
 
     /** Test that the download succeeds normally when all arguments are provided correctly 
