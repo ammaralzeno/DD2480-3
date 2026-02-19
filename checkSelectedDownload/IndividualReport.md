@@ -99,3 +99,28 @@ lizard seems to take exceptions into account when counting, since there are two 
    - **Assertion:** Verifies that showFailedDialog() is never called, meaning a new file is created successfully in mainStorage
 
 **Coverage Report Location:** `manual_coverage(after).txt`
+
+### Task 3: Refactoring Plan
+
+checkSelectedDownload can (and probably should) be split up into smaller methods. This can be done as follows:
+
+1. Extract Storage Resolution Logic 
+   - Create method such as resolveStorage to determine which StoredFileHelper to use and handle exceptions and calls to showFailedDialog
+   - Would replace the first try block including all nested if/else logic
+
+2. Extract Mission State Logic
+   - Create method such as getStorageMissionState
+   - Would replace the switch case for what file missions refer to
+
+3. Extract Dialog Message Selection
+   - Create method such as determineDialogMessages
+   - Would be called inside the None case in the mission state switch (see 2.) instead of having a large if/else
+
+4. Extract Positive-Button Action Logic 
+   - Create method such as handlePositiveButtonAction to handle switch case inside setPositiveButton
+   - Would handle creation of new storage, continueSelectedDownload(storage), and failure handling
+
+**Benefits:**
+- Improved testability thanks to smaller methods with lower CC each
+- Better readability because of less nested conditional statements
+- Easier maintenance 
