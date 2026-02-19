@@ -8,7 +8,7 @@
 
 NewPipe is a free, open-source Android app that allows users to watch and download YouTube videos without using the official YouTube app. It does not require a Google account and focuses on privacy by avoiding tracking and background data collection.
 
-# Function 1: prepareSelectedDownload()
+# Function 1: prepareSelectedDownload() (Ammar Alzeno P+)
 
 ## Onboarding experience & Complexity
 
@@ -104,7 +104,7 @@ Test cases added:
 
 see [DownloadDialogTest.java](prepareSelectedDownload/DownloadDialogTest.java) for details
 
-# Function 2: getFilteredAudioStreams()
+# Function 2: getFilteredAudioStreams() (Anna Remmare P+)
 
 ## Onboarding experience & Complexity
 
@@ -189,7 +189,7 @@ Test cases added:
 see [getFilteredAudioStreamsTest.java](getFilteredAudioStreams/03-improve-coverage/getFilteredAudioStreamsTest.java) for details
 
 
-# Function 3: getNextChunk(boolean infoOnly)
+# Function 3: getNextChunk(boolean infoOnly) (Jens Cancio P+)
 
 ## Onboarding experience & Complexity
 
@@ -299,7 +299,7 @@ Uncovered IDs: **13, 17, 18, 21, 22, 32**
 
 
 
-# Function 4: xxx()
+# Function 4: xxx() (Nora Wennerström P+)
 
 ## Onboarding experience & Complexity
 
@@ -365,7 +365,7 @@ git diff ...
 
 Number of test cases added: two per team member (P) or at least four (P+).
 
-# Function 5: checkSelectedDownload()
+# Function 5: checkSelectedDownload() (Amanda Henrion Eskeus P)
 
 **Chosen method:**`checkSelectedDownload(final StoredDirectoryHelper mainStorage, final Uri targetFile, final String filename, final String mime)` @881 in `DownloadDialog.java`  
 Path: `./app/src/main/java/org/schabi/newpipe/download/DownloadDialog.java`
