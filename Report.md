@@ -365,27 +365,41 @@ git diff ...
 
 Number of test cases added: two per team member (P) or at least four (P+).
 
-# Function 5: xxx()
+# Function 5: checkSelectedDownload()
+
+**Chosen method:**`checkSelectedDownload(final StoredDirectoryHelper mainStorage, final Uri targetFile, final String filename, final String mime)` @881 in `DownloadDialog.java`  
+Path: `./app/src/main/java/org/schabi/newpipe/download/DownloadDialog.java`
 
 ## Onboarding experience & Complexity
 
 1. What are your results for five complex functions?
    * Did all methods (tools vs. manual count) get the same result?
+
+No, but the results were still similar, 25 CCN manuallly and 27 with lizard.
+
    * Are the results clear?
+
+Considering they remain close, yes.
+
 2. Are the functions just complex, or also long?
+
+`checkSelectedDownload` is also long.
+
 3. What is the purpose of the functions?
+
+To make sure a file can be downloaded before going through with the action.
+
 4. Are exceptions taken into account in the given measurements?
+
+Yes.
+
 5. Is the documentation clear w.r.t. all the possible outcomes?
+
+Somewhat. Some of the outcomes are documented while others are not.
 
 ## Refactoring
 
-Plan for refactoring complex code:
-
-Estimated impact of refactoring (lower CC, but other drawbacks?).
-
-Carried out refactoring (optional, P+):
-
-git diff ...
+Plan for refactoring complex code: see [Individual Report](checkSelectedDownload/IndividualReport.md)
 
 ## Coverage
 
@@ -393,43 +407,33 @@ git diff ...
 
 Document your experience in using a "new"/different coverage tool.
 
-How well was the tool documented? Was it possible/easy/difficult to
-integrate it with your build environment?
+How well was the tool documented? Was it possible/easy/difficult to integrate it with your build environment?
+
+Jacoco seemed relatively well documented and easy enough to integrate with the build environment. A few adjustments had to be made though, as it didn't work immediately.
 
 ### Your own coverage tool
 
-Show a patch (or link to a branch) that shows the instrumented code to
-gather coverage measurements.
+Show a patch (or link to a branch) that shows the instrumented code to gather coverage measurements.
 
-The patch is probably too long to be copied here, so please add
-the git command that is used to obtain the patch instead:
+see [instrumented code](checkSelectedDownload/DownloadDialog.java) and [manual coverage tool](checkSelectedDownload/MAnualCoverage.java)
 
-git diff ...
+What kinds of constructs does your tool support, and how accurate is its output?  
 
-What kinds of constructs does your tool support, and how accurate is
-its output?
-
-### Evaluation
-
-1. How detailed is your coverage measurement?
-
-2. What are the limitations of your own tool?
-
-3. Are the results of your tool consistent with existing coverage tools?
+see [Individual Report][Individual Report](checkSelectedDownload/IndividualReport.md)
 
 ## Coverage improvement
 
 Show the comments that describe the requirements for the coverage.
 
-Report of old coverage: [link]
+Report of old coverage: [link](checkSelectedDownload/manual_coverage(before).txt)
 
-Report of new coverage: [link]
+Report of new coverage: [link](checkSelectedDownload/manual_coverage(after).txt)
 
 Test cases added:
 
-git diff ...
+see [test cases](checkSelectedDownload/DownloadDialogTest.java)
 
-Number of test cases added: two per team member (P) or at least four (P+).
+Number of test cases added: two for checkSelectedDownload
 
 
 # Self-assessment: Way of working
@@ -452,13 +456,13 @@ Where is potential for improvement?
 
 What are your main take-aways from this project?
 
-It is harder than expected to jump into an unknown complex project, which is not very structured and has only 2% test coverage. The onboarding experience was not very smooth. It is important to do a little research before deciding to work on a specific open source project, since it can be time draining if one chooses a badly structured project. 
+It is harder than expected to jump into an unknown complex project, which is not very structured and has only 2% test coverage. The onboarding experience was not very smooth. It is important to do a little research before deciding to work on a specific open source project, since it can be time consuming and draining if one chooses a badly structured project. 
 
 What did you learn?
 
 During this project we learnd a lot about the complexity of working with a larger project, due to NewPipes large amount of contributors, it was a lot to understand and it was quite messy.
-We also learnd more about using the branch covering tool to be able easier see how well the functions are tested.
+We also learned more about using the branch covering tool to be able easier see how well the functions are tested.
 
 Is there something special you want to mention here?
 
-The assignment was unnecessarily complex. In order to get P+ we needed to work in two different repos, and copy files in between. Assignment 1 & 2 were much better structured and we felt that we learned more from those.
+The assignment format was unnecessarily complex. In order to get P+ we needed to work in two different repos, and copy files in between. Assignment 1 & 2 were much better structured and we felt that we learned more from those.
