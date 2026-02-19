@@ -1,0 +1,22 @@
+=== Coverage for org.schabi.newpipe.player.datasource.YoutubeHttpDataSourceTest ===
+  hit branch 1
+  hit branch 3
+  hit branch 4
+  hit branch 8
+  hit branch 9
+  hit branch 11
+  hit branch 12
+  hit branch 13
+  hit branch 14
+  hit branch 15
+  hit branch 17
+  hit branch 19
+  hit branch 20
+  hit branch 22
+  hit branch 24
+  hit branch 25
+  hit branch 26
+==============================================
+
+not hit: 2, 5, 6, 7, 10, 16, 18, 21, 23
+=> around 65% branch coverage in total
