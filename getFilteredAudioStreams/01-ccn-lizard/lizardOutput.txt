@@ -1,0 +1,7 @@
+================================================
+  NLOC    CCN   token  PARAM  length  location
+------------------------------------------------
+      26      9    205      2      31 getFilteredAudioStreams@4-34@GetFilteredAudioStreams.java
+1 file analyzed.
+
+NLOC=26  CCN=9  
