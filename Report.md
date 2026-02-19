@@ -299,71 +299,100 @@ Uncovered IDs: **13, 17, 18, 21, 22, 32**
 
 
 
-# Function 4: xxx() (Nora Wennerström P+)
+# Function 4: makeConnection() (Nora Wennerström P+)
+Note: There are two methods in YoutubeHttpDataSource with the name makeConnection. The chosen function is the one with eight parameters.
 
 ## Onboarding experience & Complexity
 
-1. What are your results for five complex functions?
+1. What are your results for the complex function?
    * Did all methods (tools vs. manual count) get the same result?
    * Are the results clear?
-2. Are the functions just complex, or also long?
+
+There was a difference of two points between the lizard output (16) and the manual count (14). It seems like lizard does not always count the cyclomatic complexity in the exact same way as described in the Wikipedia article which was linked in the instructions.
+
+Either way, it is safe to say that the cyclomatic complexity number for the function is ~15, making it a promising candidate for a refactor.
+
+2. Is the function just complex, or also long?
+
+The function is 71 lines, which makes it difficult to understand at a first glance and suggests that more can be done to adhere to the SoC principle. The method takes care of multiple related tasks which could be broken out into separate functions to increase readability and testability.
+
 3. What is the purpose of the functions?
+
+The purpose of the function is to configure and open an HTTP connection using the URL passed as a parameter. The opened connection is then returned.
+
 4. Are exceptions taken into account in the given measurements?
+
+Exceptions are not taken into account for the complexity measurements.
+
 5. Is the documentation clear w.r.t. all the possible outcomes?
+
+The documentation is quite minimal and does not explicitly describe all possible outcomes.
+It only describes the general intended behavior of the function.
 
 ## Refactoring
 
 Plan for refactoring complex code:
 
-Estimated impact of refactoring (lower CC, but other drawbacks?).
+The estimated impact of refactoring is a decrease in CCN from 16 (or 14) to 1.
+The function does not need to contain multiple branches, and can easily be refactored into four separate functions.
+
+See [refactoring_plan.md](makeConnection/refactoring_plan.md) for details.
 
 Carried out refactoring (optional, P+):
-
-git diff ...
+The refactored version of the method can be found in [RefactoredFunction.java](makeConnection/RefactoredFunction.java), while the original can be found in [YoutubeHttoDataSource.java](makeConnection/YoutubeHttpDataSource.java).
 
 ## Coverage
 
 ### Tools
 
 Document your experience in using a "new"/different coverage tool.
-
 How well was the tool documented? Was it possible/easy/difficult to
 integrate it with your build environment?
 
+The tool itself worked well and was easy to use, but the size of the project (just under 650,000 lines of code according to cloc) resulted in some challenges. The main issue stemmed from limited memory resources which led to the IDE crashing multiple times while attempting to run JaCoCo. Lacking experience in working on Java/Android Studio projects, I initially struggled a bit with properly adding the JaCoCo task to gradle.
+
 ### Your own coverage tool
 
-Show a patch (or link to a branch) that shows the instrumented code to
-gather coverage measurements.
+Show a patch (or link to a branch) that shows the instrumented code to gather coverage measurements.
 
-The patch is probably too long to be copied here, so please add
-the git command that is used to obtain the patch instead:
+See [ManualCoverage.java](makeConnection/ManualCoverage.java) and [ManualCoverageRule.java](makeConnection/ManualCoverageRule.java) for details.
 
-git diff ...
+What kinds of constructs does your tool support, and how accurate is its output?
 
-What kinds of constructs does your tool support, and how accurate is
-its output?
+The tool supports measuring covered branches in all cases where a call to hit(branchID) can be added in the branch. It is accurate, assuming that method calls are added appropriately.
 
 ### Evaluation
 
 1. How detailed is your coverage measurement?
 
+The tool measures coverage on the branch-level.
+
 2. What are the limitations of your own tool?
 
+The tool requires that calls to hit(branchID) are added manually to the tested function. This means that the accuracy of the tool will depend on the accuracy with which these calls are placed in the method. Using an existing coverage tool is probably both more reliable and convenient in most cases.
+
 3. Are the results of your tool consistent with existing coverage tools?
+
+The manual coverage tool hits all branches except for 2, 5, 6, 7, 10, 16, 18, 21 and 23, which is consistent with the JaCoCo report.
 
 ## Coverage improvement
 
 Show the comments that describe the requirements for the coverage.
 
-Report of old coverage: [link]
+Report of old coverage: 0%
+(Since the tool is called as a JUnit rule when the tests for makeConnection() are executed, there is no output for the old coverage where no tests yet existed.)
 
-Report of new coverage: [link]
+Report of new coverage: [link](makeConnection/manual_coverage_after.txt)
 
 Test cases added:
+- making a (fake) connection
+- gzip/identity logic
+- logic for building and adding range header
+- followRedirect flag
 
-git diff ...
+See [YoutubeHttpDataSourceTest.java](makeConnection/YoutubeHttpDataSourceTest.java) for the implementation.
 
-Number of test cases added: two per team member (P) or at least four (P+).
+Number of test cases added: 4
 
 # Function 5: checkSelectedDownload() (Amanda Henrion Eskeus P)
 
