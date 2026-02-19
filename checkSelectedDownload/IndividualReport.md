@@ -56,7 +56,6 @@ lizard seems to take exceptions into account when counting, since there are two 
 1. `ManualCoverage.java` - Coverage tracking infrastructure
 2. Instrumented `DownloadDialog.java` - Modified method with coverage calls
 
-
 **Total: 39 branches** covering all decision points identified in manual CC count.
 
 #### Quality of Manual Coverage Tool
@@ -82,3 +81,21 @@ lizard seems to take exceptions into account when counting, since there are two 
 **Baseline Coverage (Before Instrumentation):**
 - JaCoCo Result: 0% branch coverage
 - Manual Tool Result: 0% branch coverage
+
+### Task 2: Coverage Improvement
+
+**Initial Coverage:** 0% (0/39 branches in manual tool)
+
+**Strategy:** Create unit tests targeting different switch case branches. Avoid setting parameters calling static Android methods (just pure JUnit environment).
+
+**Tests Created:**
+
+1. **testNormalDownload**
+   - **Requirement:** Dialog can proceed without errors ocurring
+   - **Assertion:** Verifies that showFailedDialog() is never called, in other words that the download succeeds
+
+2. **testTargetFileNull**
+   - **Requirement:** The case when the target file is null gets handled by creating a new file
+   - **Assertion:** Verifies that showFailedDialog() is never called, meaning a new file is created successfully in mainStorage
+
+**Coverage Report Location:** `manual_coverage(after).txt`

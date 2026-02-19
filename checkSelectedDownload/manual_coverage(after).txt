@@ -1,0 +1,56 @@
+========================================
+Manual Branch Coverage Report
+Function: checkSelectedDownload()
+File: DownloadDialog.java
+========================================
+
+Branch Coverage Details:
+------------------------
+Branch  1: [COVERED]  method entry
+Branch  2: [COVERED]  try using storage 
+Branch  3: [NOT COVERED] if: mainStorage == null 
+Branch  4: [COVERED] else if: targetFile == null (true) 
+Branch  5: [COVERED]  else if: targetFile == null (false) 
+Branch  6: [NOT COVERED]  catch exception 
+Branch  7: [COVERED] switch: state 
+Branch  8: [NOT COVERED] case Finished 
+Branch  9: [NOT COVERED] case Pending 
+Branch 10: [NOT COVERED] case PendingRunning 
+Branch 11: [COVERED] case None 
+Branch 12: [NOT COVERED] if: mainStorage == null (true) 
+Branch 13: [NOT COVERED] if: !storage.existsAsFile() && !storage.create() (true) 
+Branch 14: [NOT COVERED] if: !storage.existsAsFile() && !storage.create() (false) 
+Branch 15: [COVERED] else if: targetFile == null (true) 
+Branch 16: [COVERED] else if: targetFile == null (false) 
+Branch 17: [NOT COVERED] if: !mainStorage.mkdirs() (true) 
+Branch 18: [NOT COVERED] if: !mainStorage.mkdirs() (false) 
+Branch 19: [NOT COVERED] if: storage == null || !storage.canWrite() (true) 
+Branch 20: [NOT COVERED] if: storage == null || !storage.canWrite() (false) 
+Branch 21: [NOT COVERED] default case 
+Branch 22: [NOT COVERED] if: mainStorage == null (true) 
+Branch 23: [NOT COVERED] if: mainStorage == null (false) 
+Branch 24: [NOT COVERED] switch: state 
+Branch 25: [NOT COVERED] case Pending 
+Branch 26: [NOT COVERED] case Finished 
+Branch 27: [NOT COVERED] switch: state 
+Branch 28: [NOT COVERED] case Finished 
+Branch 29: [NOT COVERED] case Pending 
+Branch 30: [NOT COVERED] case None 
+Branch 31: [NOT COVERED] if: targetFile == null (true) 
+Branch 32: [NOT COVERED] if: targetFile == null (false) 
+Branch 33: [NOT COVERED] try: new storage 
+Branch 34: [NOT COVERED] catch exceptions 
+Branch 35: [NOT COVERED] if: storageNew != null && storageNew.canWrite() (true) 
+Branch 36: [NOT COVERED] if: storageNew != null && storageNew.canWrite() (false) 
+Branch 37: [NOT COVERED] case PendingRunning 
+Branch 38: [NOT COVERED] if: storageNew == null (true) 
+Branch 39: [NOT COVERED] if: storageNew == null (false) 
+
+========================================
+Summary:
+----------------------------------------
+Total Branches:    39
+Covered Branches:  8
+Uncovered Branches: 31
+Coverage:          20.51%
+========================================
