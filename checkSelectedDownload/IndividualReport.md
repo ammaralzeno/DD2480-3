@@ -48,3 +48,37 @@ location= DownloadDialog::checkSelectedDownload@881-1030@.\download\DownloadDial
 **Total CCN: 25** 
 lizard seems to take exceptions into account when counting, since there are two `try {...} catch {...}` blocks in the method.
 
+## Part 2: Coverage Measurement
+
+### Task 1: Manual Branch Coverage Instrumentation
+
+**Files Created:**
+1. `ManualCoverage.java` - Coverage tracking infrastructure
+2. Instrumented `DownloadDialog.java` - Modified method with coverage calls
+
+
+**Total: 39 branches** covering all decision points identified in manual CC count.
+
+#### Quality of Manual Coverage Tool
+
+**Strengths:**
+-  Tracks all normal branches (if, while, switch/case)
+-  Tracks compound boolean conditions with OR operators
+-  Tracks try/catch exception paths
+-  Shows hit count for each branch
+
+**Limitations:**
+1. Ternary operators are not automatically tracked
+2. Exception paths without explicit try/catch instrumentation are not automatically tracked 
+3. OR/AND operators create implicit branches that are tracked at the condition level, not individual sub-expression level
+4. The source code must be modified to add recordBranch() calls
+6. Instrumentation must be updated manually if the method is modified
+
+**Comparison to Automated Tools (JaCoCo):**
+- JaCoCo automatically instruments bytecode, no source modifications needed
+- JaCoCo tracks exceptions automatically
+- JaCoCo provides whole-project coverage without per-function setup
+
+**Baseline Coverage (Before Instrumentation):**
+- JaCoCo Result: 0% branch coverage
+- Manual Tool Result: 0% branch coverage
